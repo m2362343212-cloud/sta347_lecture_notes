@@ -1,0 +1,213 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{titlesec}
+
+\definecolor{defbg}{RGB}{176,109,120}
+\definecolor{noteblue}{RGB}{90,140,200}
+\definecolor{notepink}{RGB}{210,110,140}
+
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+
+\newcommand{\deftitle}[1]{%
+  \vspace{0.6em}
+  \noindent\colorbox{defbg!70}{\parbox{\dimexpr\textwidth-2\fboxsep}{\textbf{\textcolor{white}{#1}}}}
+  \vspace{0.4em}
+}
+
+\newenvironment{note}{\begin{quote}\color{noteblue}\itshape}{\end{quote}}
+\newenvironment{remark}{\begin{quote}\color{notepink}}{\end{quote}}
+
+\title{\textbf{Set Theory Fundamentals}}
+\author{Lecture 1 Notes}
+\date{}
+
+\begin{document}
+\maketitle
+
+\[
+\text{Probability} = \text{Set Theory} + \text{Measure}
+\]
+
+\section*{1. Basic Set Operations}
+Union, Intersection, Complement, \ldots
+
+\[
+A \cup B, \quad A \cap B, \quad A^c
+\]
+
+\section*{2. Convergence of Real-Valued Sequences}
+
+\deftitle{Definition 1.1.1 --- Convergence of Real-Valued Sequences}
+
+A sequence $(x_n)_{n=1}^{\infty} \subseteq \mathbb{R}$ converges to $x$ if
+\[
+\forall \varepsilon > 0,\ \exists N \in \mathbb{N} \text{ s.t. } n > N \implies |x_n - x| < \varepsilon.
+\]
+We write $x_n \to x$.
+
+\begin{note}
+You pick a threshold $\varepsilon$ = ``how close'' $x_n$ is to the target. Then for any $\varepsilon$ picked, I can find a real value $N$ such that for $n > N$, $|x_n - x| < \varepsilon$.
+\end{note}
+
+\noindent \textbf{Example:} the sequence $x_n = \dfrac{1}{n} \to 0$.
+
+\deftitle{Definition 1.1.2 --- Functional Convergence: Pointwise}
+
+A sequence of functions $(f_n)_{n=1}^{\infty} \subseteq \mathbb{R}^X$ converges pointwise to $f$ if
+\[
+\forall \varepsilon > 0,\ \forall x \in X,\ \exists N_x \in \mathbb{N} \text{ s.t. } n > N_x \implies |f_n(x) - f(x)| < \varepsilon.
+\]
+
+Here $f_1, f_2, \ldots, f_n, \ldots$ are a sequence of functions, and $f$ is the target function.
+
+\begin{note}
+For any $\varepsilon$ \emph{and} $x$, we can always find $N_x$ such that for $n > N_x$, $|f_n(x) - f(x)| < \varepsilon$ (threshold).
+\[
+\begin{array}{lclc}
+f_1(1),\ f_2(1),\ \ldots,\ f_n(1),\ \ldots & \longrightarrow & f(1) \\
+f_1(2),\ f_2(2),\ \ldots,\ f_n(2),\ \ldots & \longrightarrow & f(2)
+\end{array}
+\]
+\end{note}
+
+\deftitle{Definition 1.1.3 --- Functional Convergence: Uniform}
+
+A sequence $(f_n)_{n=1}^{\infty} \subseteq \mathbb{R}^X$ converges \textbf{uniformly} to $f$ if
+\[
+\forall \varepsilon > 0,\ \exists N \in \mathbb{N}\ (\text{common threshold}),\ \forall x \in X,\ n > N \implies |f_n(x) - f(x)| < \varepsilon.
+\]
+
+\begin{note}
+For uniform convergence, you need a \emph{common} threshold $N$ that works for all $x \in X$.
+\end{note}
+
+\subsection*{Key Difference}
+\begin{remark}
+\begin{itemize}
+  \item For \textbf{pointwise} convergence, you need to have an $x$ specified first, then there is the threshold $N_x$ corresponding to each $x$.
+  \item For \textbf{uniform} convergence, you have the common threshold $N$ that works for all $x \in X$.
+\end{itemize}
+\end{remark}
+
+\noindent \textbf{Example:} $f_n(x) = \dfrac{x}{n+x}, \quad x \geq 0$.
+
+Then for any fixed value $x$, when $n \to \infty$,
+\[
+\frac{x}{n+x} \to 0.
+\]
+Let $x = 1$: $f_n(1) = \dfrac{1}{n+1} \to 0$ as $n \to \infty$.
+
+Let $x = 2$: $f_n(2) = \dfrac{2}{n+2} \to 0$ as $n \to \infty$.
+
+\[
+f_n(x) \xrightarrow{\text{pointwise}} 0.
+\]
+
+However, it does \emph{not} converge uniformly to $0$, because we can't find an $N$ that works for all $x$. No matter how you specify the value $N$, there's always an even larger value $x$.
+\[
+\therefore f_n(x) \not\xrightarrow{\text{uniformly}} 0.
+\]
+
+\section*{3. Limiting Process}
+
+\deftitle{Definition 1.2.1 --- The Supremum of a Set}
+
+Let $A \subseteq \mathbb{R}$ be a set. $u = \sup A$ if
+\[
+\forall \varepsilon > 0,\ \exists x \in A,\ u - x < \varepsilon \qquad \text{and} \qquad \forall x \in A,\ x \le u.
+\]
+
+\deftitle{Definition 1.2.2 --- The Infimum of a Set}
+
+Let $A \subseteq \mathbb{R}$ be a set. $v = \inf A$ if
+\[
+\forall \varepsilon > 0,\ \exists x \in A,\ x - v < \varepsilon \qquad \text{and} \qquad \forall x \in A,\ x \ge v.
+\]
+
+\begin{note}
+You can find $x \in A$ that's infinitely close to the upper bound $u$ but less than it (``upper bound''); similarly $v$ is the ``lower bound.''
+\end{note}
+
+\noindent \textbf{Example:} $A = (0,1)$.
+\[
+\sup A = 1, \qquad \inf A = 0.
+\]
+
+\subsection*{Distinguish $\sup$/$\inf$ vs.\ $\max$/$\min$}
+$\max(A)$ and $\min(A)$ must be elements of $A$, but $\sup(A)$ and $\inf(A)$ may not be.
+
+\begin{itemize}
+  \item $A = (0,1)$: $\max(A)$ and $\min(A)$ do not exist.
+  \item $B = (0,1]$: $\min(B)$ does not exist, $\max(B) = 1$, $\sup(B) = 1$, $\inf(B) = 0$.
+\end{itemize}
+
+\deftitle{Definition 1.2.3 --- $\limsup$ and $\liminf$}
+
+Let $(x_n) \subseteq \mathbb{R}$ be a sequence.
+\[
+\limsup_{n \to \infty} x_n = \lim_{n \to \infty} \Big(\sup_{m \ge n} x_m\Big) = \inf_{n \ge 0}\ \sup_{m \ge n} x_m
+\]
+\[
+\liminf_{n \to \infty} x_n = \lim_{n \to \infty} \Big(\inf_{m \ge n} x_m\Big) = \sup_{n \ge 0}\ \inf_{m \ge n} x_m
+\]
+
+\begin{note}
+$\limsup$: the limit of the (running) upper bound. $\liminf$: the limit of the (running) lower bound.
+\end{note}
+
+\noindent \textbf{Example:} $x_n = (-1)^n$, i.e. $-1, 1, -1, 1, \ldots$
+
+\[
+\lim_{n \to \infty} x_n \text{ does not exist.}
+\]
+\[
+\sup_{m \ge n} x_m = 1, \qquad \inf_{m \ge n} x_m = -1 \qquad (\text{specify an } n \text{ first})
+\]
+\[
+\Rightarrow \ \limsup_{n \to \infty} x_n = 1, \qquad \liminf_{n \to \infty} x_n = -1.
+\]
+
+\begin{remark}
+$\limsup$ and $\liminf$ are used to describe the long-run behavior of a sequence, even if the sequence does not converge.
+\end{remark}
+
+\noindent For a sequence $x_n$: if
+\[
+\limsup_{n \to \infty} x_n = \liminf_{n \to \infty} x_n = x,
+\]
+then $\displaystyle\lim_{n \to \infty} x_n = x$ (the sequence $x_n$ converges to $x$).
+
+\section*{1.4 Function Limits}
+
+\deftitle{Definition 1.3 --- Left and Right Limits of Functions}
+
+For any function $f: \mathbb{R} \to \mathbb{R}$, then:
+
+\begin{enumerate}
+  \item $f(x^-) = \displaystyle\lim_{y \uparrow x} f(y) = L$
+  \[
+  \iff \forall \varepsilon > 0,\ \exists \delta > 0 \text{ s.t. } \forall y \in (x-\delta, x),\ |f(y) - L| < \varepsilon.
+  \]
+  \item $f(x^+) = \displaystyle\lim_{y \downarrow x} f(y) = U$
+  \[
+  \iff \forall \varepsilon > 0,\ \exists \delta > 0 \text{ s.t. } \forall y \in (x, x+\delta),\ |f(y) - U| < \varepsilon.
+  \]
+  \item If $f(x^-) = f(x^+) = C$, then $\displaystyle\lim_{y \to x} f(y) = C$.
+\end{enumerate}
+
+\noindent \textbf{Example:}
+\[
+f(x) = \begin{cases} 0 & x < 0 \\ 1 & x \ge 0 \end{cases}
+\]
+\[
+f(0^-) = 0, \qquad f(0^+) = 1.
+\]
+\[
+\lim_{x \to 0} f(x) \text{ does not exist.}
+\]
+
+\end{document}
